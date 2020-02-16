@@ -186,3 +186,47 @@ class Request():
 
         logger.info("Sending request to %s" % url)
         return requests.request("GET", url, headers=self._header)
+    
+        def get_model(self, modelID):
+        url = "%s/%s/models/%s/" % (self._domain, self._version, modelID)
+
+        logger.info("Sending GET request to %s" % url)
+        return requests.request("GET", url, headers=self._header)
+
+    def get_model_traits(self, modelID):
+        url = "%s/%s/traits/" % (self._domain, self._version)
+        querystring = {"usesModel": modelID, "restrictType": "ALGO_TRAIT"}
+
+        logger.info("Sending GET request to %s" % url)
+        return requests.request("GET", url, headers=self._header, params=querystring)
+
+    def get_segment_by_trait(self, trait):
+        url = "%s/%s/segments/" % (self._domain, self._version)
+        querystring = {"containsTrait": trait}
+
+        logger.info("Sending GET request to %s" % url)
+        return requests.request("GET", url, headers=self._header, params=querystring)
+
+    def delete_trait(self, trait):
+        url = "%s/%s/traits/%s" % (self._domain, self._version, trait)
+
+        logger.info("Sending DELETE request to %s" % url)
+        return requests.request("DELETE", url, headers=self._header)
+
+    def delete_segment(self, segment):
+        url = "%s/%s/segments/%s" % (self._domain, self._version, segment)
+
+        logger.info("Sending DELETE request to %s" % url)
+        return requests.request("DELETE", url, headers=self._header)
+
+    def delete_model(self, model):
+        url = "%s/%s/models/%s" % (self._domain, self._version, model)
+
+        logger.info("Sending DELETE request to %s" % url)
+        return requests.request("DELETE", url, headers=self._header)
+
+    def delete_destination_mapping(self, destID, mapping):
+        url = "%s/%s/destinations/%s/mappings/%s" % (self._domain, self._version, destID, mapping)
+
+        logger.info("Sending DELETE request to %s" % url)
+        return requests.request("DELETE", url, headers=self._header)
